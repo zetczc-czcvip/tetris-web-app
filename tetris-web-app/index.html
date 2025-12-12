@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pygame Tetris on Web</title>
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/pyscript.css" />
+    <script defer src="https://pyscript.net/releases/2024.1.1/pyscript.js"></script>
+    
+    <style>
+        body { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+            background-color: #333; /* 背景颜色 */
+        }
+        /* 确保 Pygame Canvas 能够正确显示 */
+        #pyscript_root {
+            /* 居中 Canvas 的容器 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 800px; /* 游戏宽度 */
+            height: 700px; /* 游戏高度 */
+        }
+    </style>
+</head>
+<body>
+    <py-config>
+        # 核心配置：加载 Pygame-ce 库
+        packages = ["pygame-ce"] 
+    </py-config>
+
+    <py-script src="web_game.py"></py-script>
+
+</body>
+</html>
