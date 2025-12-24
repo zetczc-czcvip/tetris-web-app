@@ -45,8 +45,16 @@ body {
     border: 2px solid #333;
     border-radius: 5px;
     display: block;
-    max-width: 100%;
+    
+    /* --- 核心优化：确保画布始终适应屏幕 --- */
+    max-width: 90vw;      /* 最大宽度为屏幕宽度的 90% */
+    max-height: 60vh;     /* 稍微调低高度比例（从70vh降到60vh），确保按钮在屏幕内 */
+    width: auto;
     height: auto;
+    margin: 0 auto;       /* 居中显示 */
+    
+    /* 移除之前的 transform，改用上面的自适应布局 */
+    transform: none !important; 
 }
 
 /* 侧边栏样式 */
