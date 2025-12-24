@@ -1,10 +1,15 @@
 // 游戏常量
+// --- 修改以下常量 ---
 const GRID_COLS = 10;
 const GRID_ROWS = 20;
-const BLOCK_SIZE = 50;
+// 将 BLOCK_SIZE 从 50 缩小到 30，这样在手机上更合适
+const BLOCK_SIZE = 30; 
 const LOGICAL_CANVAS_WIDTH = GRID_COLS * BLOCK_SIZE;
 const LOGICAL_CANVAS_HEIGHT = GRID_ROWS * BLOCK_SIZE;
-const NEXT_LOGICAL_SIZE = 200;
+// 下一个方块预览也缩小一点
+const NEXT_LOGICAL_SIZE = 120; 
+
+// ... 其余代码保持不变 ...
 
 // 获取 canvas 元素
 const canvas = document.getElementById('tetris-canvas');
