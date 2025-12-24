@@ -1,3 +1,4 @@
+/* 基础重置 */
 * {
     margin: 0;
     padding: 0;
@@ -14,6 +15,7 @@ body {
     padding: 20px;
 }
 
+/* 主容器布局 */
 .container {
     display: flex;
     gap: 20px;
@@ -29,8 +31,6 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 15px;
-    overflow: visible;
-    min-width: 0;
 }
 
 .game-area h1 {
@@ -45,11 +45,11 @@ body {
     border: 2px solid #333;
     border-radius: 5px;
     display: block;
-    transition: transform 0.3s ease;
     max-width: 100%;
     height: auto;
 }
 
+/* 侧边栏样式 */
 .sidebar {
     display: flex;
     flex-direction: column;
@@ -57,80 +57,35 @@ body {
     min-width: 320px;
 }
 
-.score-panel {
+.score-panel, .stats-panel, .info-panel, .next-panel {
     background-color: #16213e;
     border: 2px solid #0f3460;
     border-radius: 8px;
-    padding: 20px;
-    text-align: center;
+    padding: 15px;
 }
 
-.score-panel h2 {
+.score-panel h2, .info-panel h3, .next-panel h3 {
     color: #e94560;
-    font-size: 20px;
+    font-size: 18px;
     margin-bottom: 15px;
+    text-align: center;
     text-transform: uppercase;
-    letter-spacing: 1px;
 }
 
 .score-value {
     color: #fff;
     font-size: 72px;
     font-weight: bold;
+    text-align: center;
     text-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
-    min-height: 90px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.stats-panel {
-    background-color: #16213e;
-    border: 2px solid #0f3460;
-    border-radius: 8px;
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
 }
 
 .stat-item {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     color: #fff;
-    font-size: 16px;
     padding: 8px 0;
     border-bottom: 1px solid #0f3460;
-}
-
-.stat-item:last-child {
-    border-bottom: none;
-}
-
-.stat-label {
-    font-weight: normal;
-    color: #a0a0a0;
-}
-
-.stat-value {
-    font-weight: bold;
-    font-size: 20px;
-    color: #e94560;
-}
-
-.info-panel {
-    background-color: #16213e;
-    border: 2px solid #0f3460;
-    border-radius: 8px;
-    padding: 15px;
-}
-
-.info-panel h3 {
-    color: #e94560;
-    font-size: 18px;
-    margin-bottom: 10px;
-    text-align: center;
 }
 
 .info-panel ul {
@@ -140,217 +95,102 @@ body {
     line-height: 1.8;
 }
 
-.info-panel li {
-    padding: 5px 0;
-    border-bottom: 1px solid #0f3460;
-}
-
-.info-panel li:last-child {
-    border-bottom: none;
-}
-
-.next-panel {
-    background-color: #16213e;
-    border: 2px solid #0f3460;
-    border-radius: 8px;
-    padding: 15px;
-    text-align: center;
-}
-
-.next-panel h3 {
-    color: #e94560;
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
-#next-canvas {
-    background-color: #111;
-    border: 2px solid #333;
-    border-radius: 5px;
-    display: block;
-    margin: 0 auto;
-}
-
-.controls {
+/* 按钮基础样式 */
+.controls, .audio-controls {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.controls button {
-    padding: 12px 20px;
-    font-size: 16px;
+.audio-controls {
+    flex-direction: row;
+}
+
+button {
+    padding: 12px;
     font-weight: bold;
-    color: #fff;
-    background-color: #e94560;
-    border: 2px solid #c73650;
-    border-radius: 5px;
     cursor: pointer;
     transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    border-radius: 5px;
+    color: white;
+    border: none;
 }
 
-.controls button:hover {
-    background-color: #ff5c7a;
-    border-color: #e94560;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
-}
-
-.controls button:active {
-    transform: translateY(0);
-}
-
-.controls button:focus-visible {
-    outline: 3px solid rgba(255, 255, 255, 0.8);
-    outline-offset: 3px;
-    box-shadow: 0 0 0 4px rgba(233, 69, 96, 0.35);
-}
-
-.controls button:disabled {
-    background-color: #555;
-    border-color: #444;
-    cursor: not-allowed;
-    opacity: 0.6;
-}
-
-.audio-controls {
-    display: flex;
-    gap: 10px;
-    justify-content: space-between;
+#start-btn, #pause-btn, #reset-btn {
+    background-color: #e94560;
+    border: 2px solid #c73650;
 }
 
 .audio-btn {
     flex: 1;
-    padding: 10px 15px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #fff;
     background-color: #16a085;
-    border: 2px solid #138d75;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
 }
 
-.audio-btn:hover {
-    background-color: #1abc9c;
-    border-color: #16a085;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(22, 160, 133, 0.4);
-}
-
-.audio-btn:active {
-    transform: translateY(0);
-}
-
-.audio-btn:focus-visible {
-    outline: 3px solid rgba(255, 255, 255, 0.8);
-    outline-offset: 3px;
-    box-shadow: 0 0 0 4px rgba(22, 160, 133, 0.35);
-}
-
-.audio-btn.disabled {
-    background-color: #555;
-    border-color: #444;
-    opacity: 0.6;
-}
-
-.game-controls {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+/* --- 手机端控制区样式 (默认在电脑端隐藏) --- */
+.mobile-input-area {
+    display: none;
+    width: 100%;
+    max-width: 400px;
     margin-top: 20px;
-}
-
-.game-controls button {
-    padding: 12px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #fff;
-    background-color: #0f3460;
-    border: 2px solid #16213e;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.game-controls button:hover {
-    background-color: #1a4a7a;
-    border-color: #0f3460;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(15, 52, 96, 0.4);
-}
-
-.game-controls button:active {
-    transform: translateY(0);
-}
-
-.game-controls button:focus-visible {
-    outline: 3px solid rgba(255, 255, 255, 0.8);
-    outline-offset: 3px;
-    box-shadow: 0 0 0 4px rgba(15, 52, 96, 0.35);
 }
 
 .direction-buttons {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px;
+    gap: 15px;
+    margin: 15px 0;
 }
 
-.direction-buttons button {
-    padding: 15px;
-    font-size: 24px;
+.ctrl-btn {
+    background-color: #34495e;
+    font-size: 20px;
+    box-shadow: 0 5px 0 #2c3e50;
+    touch-action: manipulation; /* 消除点击延迟 */
+    padding: 20px;
 }
 
-#rotate-btn {
-    width: 100%;
+.ctrl-btn:active {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 #2c3e50;
 }
 
-/* 响应式设计 */
+.large { background-color: #e94560; box-shadow: 0 5px 0 #c73650; height: 80px; }
+.full { width: 100%; background-color: #2a5298; box-shadow: 0 5px 0 #1e3c72; }
+
+/* --- 响应式设计 --- */
 @media (max-width: 768px) {
+    body { padding: 10px; }
+    
     .container {
         flex-direction: column;
-        max-width: 100%;
         padding: 10px;
+        border: none;
     }
 
-    .game-area h1 {
-        font-size: 24px;
+    .game-area h1 { font-size: 28px; }
+
+    /* 手机端显示控制按钮 */
+    .mobile-input-area {
+        display: flex;
+        flex-direction: column;
     }
 
+    /* 手机端调整侧边栏布局 */
     .sidebar {
         min-width: 100%;
+        gap: 15px;
     }
 
+    /* 隐藏对手机无用的说明面板 */
+    .info-panel {
+        display: none;
+    }
+
+    .score-value { font-size: 48px; }
+    
+    /* 让侧边栏的控制按钮排成一排 */
     .controls {
         flex-direction: row;
-        flex-wrap: wrap;
     }
-
-    .controls button {
-        flex: 1;
-        min-width: 120px;
-    }
+    .controls button { flex: 1; font-size: 14px; }
 }
-
-/* 超小屏幕优化 */
-@media (max-width: 480px) {
-    body {
-        padding: 10px;
-    }
-
-    .container {
-        padding: 10px;
-    }
-
-    .game-area h1 {
-        font-size: 20px;
-    }
-
-    .score-value {
-        font-size: 36px;
-    }
-}
-
