@@ -401,4 +401,25 @@ document.addEventListener('DOMContentLoaded', () => {
     ui.rotateBtn.onclick = rotatePiece;
     if (ui.spaceBtn) ui.spaceBtn.onclick = hardDrop;
 
-    // 音
+    // 音效控制
+    ui.soundToggleBtn.onclick = () => {
+        soundEnabled = !soundEnabled;
+        ui.soundToggleBtn.textContent = soundEnabled ? "🔊 音效" : "🔇 音效";
+    };
+    ui.musicToggleBtn.onclick = () => {
+        musicEnabled = !musicEnabled;
+        ui.musicToggleBtn.textContent = musicEnabled ? "🎵 音乐" : "🔇 音乐";
+        musicEnabled && gameRunning && !gamePaused ? playBackgroundMusic() : stopBackgroundMusic();
+    };
+
+    // 键盘支持
+    document.onkeydown = (e) => {
+        if (!gameRunning || gamePaused) return;
+        if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key)) e.preventDefault();
+        if (e.key === 'ArrowLeft') moveLeft();
+        if (e.key === 'ArrowRight') moveRight();
+        if (e.key === 'ArrowDown') moveDown();
+        if (e.key === 'ArrowUp') rotatePiece();
+        if (e.key === ' ') hardDrop();
+    };
+});
