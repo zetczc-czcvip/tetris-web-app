@@ -1,15 +1,10 @@
 // 游戏常量
-// --- 修改以下常量 ---
 const GRID_COLS = 10;
 const GRID_ROWS = 20;
-// 将 BLOCK_SIZE 从 50 缩小到 30，这样在手机上更合适
 const BLOCK_SIZE = 30; 
 const LOGICAL_CANVAS_WIDTH = GRID_COLS * BLOCK_SIZE;
 const LOGICAL_CANVAS_HEIGHT = GRID_ROWS * BLOCK_SIZE;
-// 下一个方块预览也缩小一点
 const NEXT_LOGICAL_SIZE = 120; 
-
-// ... 其余代码保持不变 ...
 
 // 获取 canvas 元素
 const canvas = document.getElementById('tetris-canvas');
@@ -27,7 +22,6 @@ const ui = {
     resetBtn: document.getElementById('reset-btn'),
     soundToggleBtn: document.getElementById('sound-toggle-btn'),
     musicToggleBtn: document.getElementById('music-toggle-btn'),
-    // 移动端控制按钮
     rotateBtn: document.getElementById('rotate-btn'),
     leftBtn: document.getElementById('left-btn'),
     rightBtn: document.getElementById('right-btn'),
@@ -147,7 +141,6 @@ function stopBackgroundMusic() {
     backgroundMusicPlaying = false;
 }
 
-// 俄罗斯方块定义
 const SHAPES = [
     { matrix: [[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]], colorIndex: 1 },
     { matrix: [[1,0,0,0],[1,1,1,0],[0,0,0,0],[0,0,0,0]], colorIndex: 2 },
@@ -163,7 +156,6 @@ const COLOR_LOOKUP = [
     'rgb(255,255,0)', 'rgb(0,255,0)', 'rgb(128,0,128)', 'rgb(255,0,0)'
 ];
 
-// 核心逻辑函数
 function rotate(matrix) {
     const size = 4;
     const rotated = [];
@@ -205,7 +197,6 @@ function merge() {
             }
         }
     }
-    
     let linesCleared = 0;
     for (let row = GRID_ROWS - 1; row >= 0; row--) {
         if (grid[row].every(cell => cell !== 0)) {
@@ -215,7 +206,6 @@ function merge() {
             row++;
         }
     }
-    
     sounds.drop();
     if (linesCleared > 0) {
         const oldLevel = level.value;
@@ -229,13 +219,11 @@ function merge() {
         ui.level.textContent = level.value;
         dropInterval = Math.max(100, 1000 - (level.value - 1) * 100);
     }
-
     const newPieceData = nextPiece;
     const gameOver = collide(newPieceData.matrix, newPieceData.pos, grid);
     return { nextPiece: newPieceData, newNextPiece: getPiece(), gameOver: gameOver };
 }
 
-// 游戏控制
 let grid = [], currentPiece = null, nextPiece = null, currentPosition = {x:0, y:0};
 let score = {value:0}, lines = {value:0}, level = {value:1}, lastTime = 0;
 let dropInterval = 1000, gameRunning = false, gamePaused = false, animationFrameId = null;
@@ -256,6 +244,7 @@ function drawBlock(x, y, color, context = ctx, blockSize = BLOCK_SIZE) {
     context.strokeRect(x * blockSize, y * blockSize, blockSize, blockSize);
 }
 
+// 核心修复部分：修改 draw 函数
 function draw() {
     ctx.fillStyle = '#111';
     ctx.fillRect(0, 0, LOGICAL_CANVAS_WIDTH, LOGICAL_CANVAS_HEIGHT);
@@ -267,12 +256,25 @@ function draw() {
             if (value !== 0) drawBlock(currentPosition.x + x, currentPosition.y + y, COLOR_LOOKUP[currentPiece.colorIndex]);
         }));
     }
-    // 绘制预览
+
+    // 绘制预览框：自动适配 NEXT_LOGICAL_SIZE
     nextCtx.fillStyle = '#111';
     nextCtx.fillRect(0, 0, NEXT_LOGICAL_SIZE, NEXT_LOGICAL_SIZE);
     if (nextPiece) {
+        // 自动计算预览方块大小，保证 4x4 矩阵居中显示
+        const previewSize = NEXT_LOGICAL_SIZE / 5; // 稍微留白
+        const padding = (NEXT_LOGICAL_SIZE - (4 * previewSize)) / 2;
+        
         nextPiece.matrix.forEach((row, y) => row.forEach((value, x) => {
-            if (value !== 0) drawBlock(x + 0.5, y + 0.5, COLOR_LOOKUP[nextPiece.colorIndex], nextCtx, 45);
+            if (value !== 0) {
+                drawBlock(
+                    (padding / previewSize) + x, 
+                    (padding / previewSize) + y, 
+                    COLOR_LOOKUP[nextPiece.colorIndex], 
+                    nextCtx, 
+                    previewSize
+                );
+            }
         }));
     }
 }
@@ -290,7 +292,6 @@ function update(timestamp) {
     animationFrameId = requestAnimationFrame(update);
 }
 
-// 动作函数
 function moveLeft() {
     if (!gameRunning || gamePaused) return;
     if (!collide(currentPiece.matrix, {x: currentPosition.x - 1, y: currentPosition.y}, grid)) {
@@ -379,34 +380,26 @@ function initGame() {
     animationFrameId = requestAnimationFrame(update);
 }
 
-// 事件绑定
 document.addEventListener('DOMContentLoaded', () => {
     setupCanvases();
     initGrid();
     draw();
-
     ui.startBtn.onclick = async () => {
         try { await audioContext.resume(); } catch(e) {}
         if (!gameRunning) initGame();
     };
-
     ui.pauseBtn.onclick = () => {
         if (!gameRunning) return;
         gamePaused = !gamePaused;
         ui.pauseBtn.textContent = gamePaused ? "继续" : "暂停";
         gamePaused ? stopBackgroundMusic() : (musicEnabled && playBackgroundMusic(), lastTime = performance.now());
     };
-
     ui.resetBtn.onclick = () => { gameRunning = false; stopBackgroundMusic(); initGame(); };
-
-    // 移动端按钮绑定
     ui.leftBtn.onclick = moveLeft;
     ui.rightBtn.onclick = moveRight;
     ui.downBtn.onclick = moveDown;
     ui.rotateBtn.onclick = rotatePiece;
     if (ui.spaceBtn) ui.spaceBtn.onclick = hardDrop;
-
-    // 音效控制
     ui.soundToggleBtn.onclick = () => {
         soundEnabled = !soundEnabled;
         ui.soundToggleBtn.textContent = soundEnabled ? "🔊 音效" : "🔇 音效";
@@ -416,8 +409,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ui.musicToggleBtn.textContent = musicEnabled ? "🎵 音乐" : "🔇 音乐";
         musicEnabled && gameRunning && !gamePaused ? playBackgroundMusic() : stopBackgroundMusic();
     };
-
-    // 键盘支持
     document.onkeydown = (e) => {
         if (!gameRunning || gamePaused) return;
         if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key)) e.preventDefault();
