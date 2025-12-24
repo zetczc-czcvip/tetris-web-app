@@ -2,8 +2,8 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>俄罗斯方块</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>俄罗斯方块 - 移动适配版</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,6 +11,16 @@
         <div class="game-area">
             <h1>俄罗斯方块</h1>
             <canvas id="tetris-canvas" width="500" height="1000"></canvas>
+            
+            <div class="mobile-input-area">
+                <button id="rotate-btn" class="ctrl-btn large">旋转方块</button>
+                <div class="direction-buttons">
+                    <button id="left-btn" class="ctrl-btn">左</button>
+                    <button id="down-btn" class="ctrl-btn">下</button>
+                    <button id="right-btn" class="ctrl-btn">右</button>
+                </div>
+                <button id="space-btn" class="ctrl-btn full">直接落下</button>
+            </div>
         </div>
         
         <div class="sidebar">
@@ -55,19 +65,9 @@
                 <button id="sound-toggle-btn" class="audio-btn">🔊 音效</button>
                 <button id="music-toggle-btn" class="audio-btn">🎵 音乐</button>
             </div>
-            
-            <div class="game-controls">
-                <button id="rotate-btn">旋转</button>
-                <div class="direction-buttons">
-                    <button id="left-btn">←</button>
-                    <button id="down-btn">↓</button>
-                    <button id="right-btn">→</button>
-                </div>
-            </div>
         </div>
     </div>
     
     <script src="script.js"></script>
 </body>
 </html>
-
